@@ -54,6 +54,11 @@ cd mnist_neural_nets
 
 chpl -I/usr/local/opt/openblas/include -L/usr/local/opt/openblas/lib -lblas nn.chpl --fast  -M ../lib/
 
+or
+
+ ~/chapel/chapel-1.20.0/bin/linux_ppc_le64-ppc64le/chpl -I/usr/local/opt/openblas/include -L/usr/local/opt/openblas/lib -lblas chapels_nn.chpl --fast  -M lib/
+
+
 Add/Remove --fast 
 
 This is a compiler
@@ -74,13 +79,24 @@ or
 
 When you run just ./nn the default values are
 
-config const train_file = "mnist_dataset/mnist_train.csv";
-config const test_file  = "mnist_dataset/mnist_test.csv";
-config const learn_rate : real = 0.08;
-config const training_epochs_iterations : int = 800;
-var layer1_neurons: int          = 784;
-var layer2_neurons: int          = 128;
-var layer3_neurons: int          = 128;
+config const train_input_file = "dataset/xtrain.csv";
+config const train_output_file = "dataset/ytrain.csv";
+config const test_input_file  = "dataset/xval.csv";
+config const test_output_file = "dataset/yval.csv";
+config const learn_rate : real = 0.5;
+config const training_epochs_iterations : int = 230;
+const digits_range      = 0..9;
+const pixels_per_line   = 1..64;                // 8 X 8 pixels
+config const layer1_neurons: int         = 64;
+config const layer2_neurons: int         = 128;
+config const layer3_neurons: int         = 128;
+
+
+### To Run pythons nn
+---------------------
+
+python3 pythons_nn.py
+
 
 ### My ANN Network Sample
 -----------------
