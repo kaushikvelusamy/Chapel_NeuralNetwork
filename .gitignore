@@ -1,1 +1,2 @@
-*.csv
+large_mnist_train.csv
+large_mnist_test.csv

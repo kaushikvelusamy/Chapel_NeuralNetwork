@@ -65,32 +65,23 @@ var testing_inputs   : [1..testing_sample_size, pixels_per_line] real;
 var testing_outputs  : [1..testing_sample_size] real;
 
 
-
 for (i,j) in A_train.domain do
 {
 	//Range normalization
-	training_inputs[i, j-1] = (A_train(i,j)) / 16;
+	training_inputs[i, j] = (A_train(i,j)) / 16;
 }
-
-
-
-
 for (i,j) in L_train.domain do
 {
 	if(L_train[i,j] == 1)
 	{
-
-
 		training_outputs[i]     = j;
-		train_out_hot[i , training_outputs[i]:int + 1] = 1;
-
-
+		train_out_hot[i , training_outputs[i]:int] = 1;
 	}
 }
 
 for (i,j) in A_test.domain do
 {
-	testing_inputs[i, j-1] = (A_test(i,j)) / 16 ;
+	testing_inputs[i, j] = (A_test(i,j)) / 16 ;
 }
 
 for (i,j) in L_test.domain do
@@ -309,7 +300,7 @@ proc backprop()
 	var adju_w3: [adju_w3_domain] real;
 	var adju_w2_domain:domain(2) = {1..layer2_neurons, 1..layer3_neurons};
 	var adju_w2: [adju_w2_domain] real;
-	var adju_w1_domain:domain(2) = {1..784, 1..layer2_neurons};
+	var adju_w1_domain:domain(2) = {1..layer1_neurons, 1..layer2_neurons};
 	var adju_w1: [adju_w1_domain] real;
 
 	adju_w3 = dot(transpose(layer2_result), a3_delta);
@@ -340,7 +331,7 @@ proc error(pred, training_outputs)
 	var sum : real = 0;
 	for i in 1..training_sample_size
 	{
-		sum  += -log(pred[i, training_outputs[i]+1]);
+		sum  += -log(pred[i, training_outputs[i]]);
 		// values in the labels are from 0 to 9, but the indexes/domain is from 1 to 10
 	}
 	return sum/training_sample_size;
@@ -402,7 +393,7 @@ var tlayer2_temp_vec     : [1..layer3_neurons] real;
 var tlayer3_result_dom   : domain(2)     = {1..testing_sample_size, 1..10};
 var tlayer3_result       : [tlayer3_result_dom] real;
 var tlayer3_temp_vec     : [1..10] real;
-
+writeln("kaushik");
 get_accuracy();
 
 watch.stop();
@@ -429,7 +420,7 @@ proc get_accuracy()
 	var count:int = 0;
 	for i in 1..testing_sample_size
 	{
-		if(o_out[i,2] - 1 == testing_outputs[i]) then
+		if(o_out[i,2]  == testing_outputs[i]) then
 		{
 			count += 1;
 			write("Testing hit count  ", count, '/', testing_sample_size, '\t ');
