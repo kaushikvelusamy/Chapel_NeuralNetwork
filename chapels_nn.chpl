@@ -65,12 +65,12 @@ var testing_inputs   : [1..testing_sample_size, pixels_per_line] real;
 var testing_outputs  : [1..testing_sample_size] real;
 
 
-for (i,j) in A_train.domain do
+forall (i,j) in A_train.domain do
 {
 	//Range normalization
 	training_inputs[i, j] = (A_train(i,j)) / 16;
 }
-for (i,j) in L_train.domain do
+forall (i,j) in L_train.domain do
 {
 	if(L_train[i,j] == 1)
 	{
@@ -79,12 +79,12 @@ for (i,j) in L_train.domain do
 	}
 }
 
-for (i,j) in A_test.domain do
+forall (i,j) in A_test.domain do
 {
 	testing_inputs[i, j] = (A_test(i,j)) / 16 ;
 }
 
-for (i,j) in L_test.domain do
+forall (i,j) in L_test.domain do
 {
 	if(L_test[i,j] == 1)
 	{
