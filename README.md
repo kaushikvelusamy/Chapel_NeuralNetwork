@@ -10,23 +10,36 @@ brew install openblas
 ### To Compile
 ----------
 
-chpl -I/usr/local/opt/openblas/include -L/usr/local/opt/openblas/lib -lblas chapels_nn.chpl --fast  -M ../lib/
+#### With OpenBlas
 
+```
+chpl -I/usr/local/opt/openblas/include -L/usr/local/opt/openblas/lib -lblas chapels_nn.chpl --fast  -M lib/
+```
+
+
+#### With Intel Math Kernel Library
+
+```
+chpl  -lm  -lmkl_intel_lp64 -lmkl_sequential -lmkl_core  --set blasImpl=mkl chapels_nn.chpl -M lib/
+```
 
 ### To Run
 ------
 
+```
 ./chapels_nn
-
+```
 
 or
 
+```
 ./nn --train_file "FILE_PATH" --test_file "FILE_PATH" --learn_rate "VALUE BETWEEN 0.01-0.10" --training_epochs_iterations "VALUE BETWEEN 100-1000" --layer1_neurons "INT_VALUE" --layer2_neurons "INT_VALUE" --layer3_neurons "INT_VALUE"
-
+```
 
 
 When you run just ./nn the default values are
 
+```
 config const train_input_file = "dataset/xtrain.csv";
 config const train_output_file = "dataset/ytrain.csv";
 config const test_input_file  = "dataset/xval.csv";
@@ -38,7 +51,7 @@ const pixels_per_line   = 1..64;                // 8 X 8 pixels
 config const layer1_neurons: int         = 64;
 config const layer2_neurons: int         = 128;
 config const layer3_neurons: int         = 128;
-
+```
 
 ### To Run pythons nn
 ---------------------
@@ -73,6 +86,9 @@ See the :mod:`BLAS` and :mod:`LAPACK` documentation for further details.
 
 ### Ignore Known Warnings
 --------------
+
+
+```
 Compilation will generate warnings about incompatible pointer types,
 for each "dot" or matrix multiplication, which may be ignored.
 
@@ -91,7 +107,7 @@ These warnings are due to the header files of OpenBLAS differing from the
 reference C_BLAS prototypes for complex arguments by using ``float*`` and
 ``double*`` pointers, instead of ``void*`` pointers.
 
-
+```
 
 
 ### Thanks to:
